@@ -782,9 +782,31 @@ input[type='checkbox'] {
 /*    04. Header     */
 /*********************/
 .header {
+	background:linear-gradient(rgba(0, 0, 0, 0.5), #5f4dee), url('../images/cov.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: scroll;
+	background-origin: border-box;
+	background-clip: border-box;
 	background-color: #5f4dee;
+	
 }
 
+#map {
+	height: 600px;
+	width: 100%;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.leaflet-popup-content {
+	font-size: 14px;
+	line-height: 1.5;
+}
+.leaflet-popup-content b {
+	color: #007BFF;
+}
 .header .header-content {
 	padding-top: 8rem;
 	padding-bottom: 4rem;
@@ -1583,10 +1605,17 @@ a:hover.back-to-top {
 /*     18. Sign Up and Log In Pages     */
 /****************************************/
 .ex-2-header {
-	padding-top: 9rem;
-	background-color: #5f4dee;
+	padding-top: 1rem;
 	text-align: center;
 	min-height: 100vh;
+	background:linear-gradient(rgba(0, 0, 0, 0.5), #fefeff), url('../images/log1.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: scroll;
+	background-origin: border-box;
+	background-clip: border-box;
+	background-color: #9d83f4;
 }
 
 .ex-2-header h1,
@@ -1597,23 +1626,38 @@ a:hover.back-to-top {
 .ex-2-header p {
 	max-width: 24rem;
 	margin-right: auto;
-	margin-bottom: 2.5rem;
+	margin-bottom: 2rem;
 	margin-left: auto;
 }
 
 .ex-2-header .form-container {
-	max-width: 26rem;
+	max-width: 40rem;
 	margin-right: auto;
 	margin-left: auto;
 	padding: 2.25rem 1.25rem 1.25rem 1.25rem;
 	border-radius: 0.5rem;
-	background-color: #f3f7fd;
+	background:linear-gradient(rgba(114, 87, 200, 0.888), #ffffff);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: scroll;
+	background-origin: border-box;
+	background-clip: border-box;
+	background-color: none;
 }
 
 .ex-2-header .checkbox {
 	text-align: left;
 }
 
+#predicted-magnitude {
+    font-size: 5em; /* Augmenter la taille du texte */
+    font-weight: bold; /* Garder le texte en gras pour plus de visibilité */
+    font-family: 'Open Sans', sans-serif; /* Utiliser la police Open Sans */
+    color: white; /* Couleur par défaut, ajustée par le script en fonction de la magnitude */
+    text-align: center; /* Centrer le texte */
+    margin-top: 10px; /* Ajouter un peu d'espace au-dessus du texte */
+}
 
 /*****************************/
 /*     19. Media Queries     */

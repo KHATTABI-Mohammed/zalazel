@@ -18,7 +18,7 @@
 	<meta property="og:type" content="article" />
 
     <!-- Website Title -->
-    <title>Article Details - Tivo - SaaS App HTML Landing Page Template</title>
+    <title>PREDICTION</title>
     
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
@@ -27,6 +27,8 @@
    <link href="{{ url_for('static', filename='css/fontawesome-all.css') }}" rel="stylesheet">
    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
    <link rel="icon" href="{{ url_for('static', filename='images/log1.png') }}">
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
+
 	
 	<!-- Favicon  -->
     <link rel="icon" href="images/favicon.png">
@@ -44,8 +46,8 @@
     <!-- end of preloader -->
     
 
-     <!-- Navigation -->
-     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <div class="container">
 
             <!-- Text Logo - Use this if you don't have a graphic logo -->
@@ -67,22 +69,12 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#header">HOME <span class="sr-only">(current)</span></a>
+                        <a class="nav-link page-scroll" href="{{ url_for('index') }}">ACCUEIL <span class="sr-only">(current)</span></a>
                     </li>     <!-- Dropdown Menu -->          
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle page-scroll" href="#video" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">VIDEO</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="article-details.html"><span class="item-text">ARTICLE DETAILS</span></a>
-                            <div class="dropdown-items-divide-hr"></div>
-                            <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS CONDITIONS</span></a>
-                            <div class="dropdown-items-divide-hr"></div>
-                            <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY POLICY</span></a>
-                        </div>
-                    </li>
-                    <!-- end of dropdown menu -->
+                 
 
                     <li class="nav-item">
-                        <a class="nav-link page-scroll" href="#features">FEATURES</a>
+                        <a class="nav-link page-scroll" href="{{ url_for('commencer') }}">PREDIRE</a>
                     </li>
                 
 
@@ -97,86 +89,127 @@
     <!-- end of navigation -->
 
 
-    <!-- Header -->
-    <header id="header" class="ex-header">
+       <!-- Header -->
+       <header id="header" class="ex-header">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Résultats de la Prédiction</h1>
+                    <h1 style="margin-bottom: 40px;">Résultats de la Prédiction</h1>
                     <div class="container">
-                        <p class="p-small" style="color:white">Magnitude prédite : {{ prediction | round(2) }}</p>
-                        
+                       
+                            <span id="predicted-magnitude"></span>
+                     
+                        <div id="danger-image" style="display: none;">
+                            <img src="{{ url_for('static', filename='images/danger.png') }}" alt="Danger" style="width: 300px; height: auto;">
+                        </div>
                     </div>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </header> <!-- end of ex-header -->
-    <!-- end of header -->
+                </div>
+            </div>
+        </div>
+    </header>
 
-
-    <!-- Privacy Content -->
-    <div class="ex-basic-2">
+    <!-- Button to go back -->
+    <div class="ex-basic-2" style="text-align: center;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <a class="btn-outline-reg" href="{{ url_for('index') }}">BACK</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script>
+        // Récupérer la valeur de la prédiction
+        var predictedValue = {{ prediction | round(2) }};
+        var targetElement = document.getElementById('predicted-magnitude');
 
-                    <a class="btn-outline-reg"  href="{{ url_for('index') }}">BACK</a>
-                </div> <!-- end of col-->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of ex-basic-2 -->
-    <!-- end of privacy content -->
+        // Fonction d'animation pour le résultat
+        function animateMagnitude() {
+            var currentValue = 0;
+            var step = (predictedValue / 100); // Ajuster la vitesse de l'animation
+            var interval = setInterval(function() {
+                currentValue += step;
+                if (currentValue >= predictedValue) {
+                    currentValue = predictedValue;
+                    clearInterval(interval);
+                }
+                targetElement.innerText = currentValue.toFixed(2);  // Affiche le résultat avec 2 décimales
+            }, 20); // Temps entre chaque étape de l'animation
+        }
 
+        // Déclencher l'animation quand la page est prête
+        $(document).ready(function() {
+            animateMagnitude();
 
-
+            // Change la couleur en fonction de la magnitude
+            if (predictedValue >= 7) {
+                targetElement.style.color = 'red';
+                // Afficher l'image de danger si la magnitude est élevée
+                document.getElementById('danger-image').style.display = 'block';
+            } else if (predictedValue >= 4) {
+                targetElement.style.color = 'orange';
+            } else {
+                targetElement.style.color = '#62e465';
+            }
+        });
+    </script>
 
     
     <!-- Footer -->
-    <svg class="ex-footer-frame" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1920 79"><defs><style>.cls-2{fill:#5f4def;}</style></defs><title>footer-frame</title><path class="cls-2" d="M0,72.427C143,12.138,255.5,4.577,328.644,7.943c147.721,6.8,183.881,60.242,320.83,53.737,143-6.793,167.826-68.128,293-60.9,109.095,6.3,115.68,54.364,225.251,57.319,113.58,3.064,138.8-47.711,251.189-41.8,104.012,5.474,109.713,50.4,197.369,46.572,89.549-3.91,124.375-52.563,227.622-50.155A338.646,338.646,0,0,1,1920,23.467V79.75H0V72.427Z" transform="translate(0 -0.188)"/></svg>
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="footer-col first">
-                        <h4>About Tivo</h4>
-                        <p class="p-small">We're passionate about offering some of the best business growth services for start more words</p>
-                    </div>
-                </div> <!-- end of col -->
-                <div class="col-md-4">
-                    <div class="footer-col middle">
-                        <h4>Important Links</h4>
-                        <ul class="list-unstyled li-space-lg p-small">
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Our business partners <a class="white" href="#your-link">startupguide.com</a></div>
-                            </li>
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Read our <a class="white" href="terms-conditions.html">Terms & Conditions</a>, <a class="white" href="privacy-policy.html">Privacy Policy</a></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div> <!-- end of col -->
-                <div class="col-md-4">
-                    <div class="footer-col last">
-                        <h4>Contact</h4>
-                        <ul class="list-unstyled li-space-lg p-small">
-                            <li class="media">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <div class="media-body">22 Innovative, San Francisco, CA 94043, US</div>
-                            </li>
-                            <li class="media">
-                                <i class="fas fa-envelope"></i>
-                                <div class="media-body"><a class="white" href="mailto:contact@Tivo.com">contact@Tivo.com</a> <i class="fas fa-globe"></i><a class="white" href="#your-link">www.Tivo.com</a></div>
-                            </li>
-                        </ul>
-                    </div> 
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of footer -->  
-    <!-- end of footer -->
+<svg class="footer-frame" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1920 79"><defs><style>.cls-2{fill:#5f4def;}</style></defs><title>footer-frame</title><path class="cls-2" d="M0,72.427C143,12.138,255.5,4.577,328.644,7.943c147.721,6.8,183.881,60.242,320.83,53.737,143-6.793,167.826-68.128,293-60.9,109.095,6.3,115.68,54.364,225.251,57.319,113.58,3.064,138.8-47.711,251.189-41.8,104.012,5.474,109.713,50.4,197.369,46.572,89.549-3.91,124.375-52.563,227.622-50.155A338.646,338.646,0,0,1,1920,23.467V79.75H0V72.427Z" transform="translate(0 -0.188)"/></svg>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="footer-col first">
+                    <h4>À propos</h4>
+                    <p class="p-small">Cette application fournit des données sismiques en temps réel et des analyses pour mieux comprendre les activités tectoniques.</p>
+                </div>
+            </div> <!-- end of col -->
+            <div class="col-md-4">
+                <div class="footer-col middle">
+                    <h4>Liens Utiles</h4>
+                    <ul class="list-unstyled li-space-lg p-small">
+                        <li class="media">
+                            <i class="fas fa-square"></i>
+                            <div class="media-body">Voir les statistiques détaillées des séismes sur <a class="white" href="https://earthquake.usgs.gov/">USGS Earthquake Program</a></div>
+                        </li>
+                        <li class="media">
+                            <i class="fas fa-square"></i>
+                            <div class="media-body">Consultez les <a class="white" href="terms-conditions.html">Conditions Générales</a> et la <a class="white" href="privacy-policy.html">Politique de Confidentialité</a></div>
+                        </li>
+                        <li class="media">
+                            <i class="fas fa-square"></i>
+                            <div class="media-body">Informations sur les mesures de sécurité en cas de séismes sur <a class="white" href="https://www.ready.gov/earthquakes">Ready.gov</a></div>
+                        </li>
+                    </ul>
+                </div>
+            </div> <!-- end of col -->
+            <div class="col-md-4">
+                <div class="footer-col last">
+                    <h4>Contact</h4>
+                    <ul class="list-unstyled li-space-lg p-small">
+                        <li class="media">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="media-body">Bureau central, Paris, France</div>
+                        </li>
+                        <li class="media">
+                            <i class="fas fa-envelope"></i>
+                            <div class="media-body"><a class="white" href="mailto:contact@seismicapp.com">contact@seismicapp.com</a></div>
+                        </li>
+                        <li class="media">
+                            <i class="fas fa-globe"></i>
+                            <div class="media-body"><a class="white" href="https://seismicapp.com">www.seismicapp.com</a></div>
+                        </li>
+                    </ul>
+                </div> 
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of footer -->  
+<!-- end of footer -->
 
 
     <!-- Copyright -->
@@ -184,7 +217,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Inovatik</a></p>
+                    <p class="p-small">Copyright © 2025 QUAKEX</a></p>
                 </div> <!-- end of col -->
             </div> <!-- enf of row -->
         </div> <!-- end of container -->
